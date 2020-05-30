@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -14,6 +13,19 @@ type Context struct {
 	Errors    int32
 	Files     int32
 	EmptyDirs int32
+}
+
+func readDir(dirname string) ([]os.FileInfo, error) {
+	f, err := os.Open(dirname)
+	if err != nil {
+		return nil, err
+	}
+	list, err := f.Readdir(-1)
+	f.Close()
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
 }
 
 func main() {
@@ -36,7 +48,7 @@ func main() {
 				if ! ok {
 					return
 				}
-				infos, err := ioutil.ReadDir(dir)
+				infos, err := readDir(dir)
 				if err != nil {
 					atomic.AddInt32(&ctx.Errors, 1)
 				} else if len(infos) < 1 {
