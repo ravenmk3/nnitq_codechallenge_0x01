@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -18,7 +19,7 @@ func main() {
 	start := time.Now()
 	log.SetOutput(os.Stdout)
 
-	workers := 4
+	workers := runtime.NumCPU()
 	rootDir := "/"
 
 	var wg sync.WaitGroup
@@ -70,7 +71,9 @@ func main() {
 
 	elapsed := time.Since(start)
 
+	log.Printf("Root Dir: %s\n", rootDir)
 	log.Printf("Elapsed: %s\n", elapsed)
+	log.Printf("Workers: %d\n", workers)
 	log.Printf("Errors: %d\n", errors)
 	log.Printf("Files: %d\n", files)
 	log.Printf("Empty Dirs: %d\n", emptyDirs)

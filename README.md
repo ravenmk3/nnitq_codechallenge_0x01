@@ -1,5 +1,7 @@
 # 南宁 IT 圈代码挑战 0x01
 
+[代码挑战传送门](https://github.com/nnitquan/codechallenge)
+
 Go 简单粗暴无递归版
 
 运行：
